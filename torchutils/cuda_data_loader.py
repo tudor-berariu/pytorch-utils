@@ -21,6 +21,7 @@ class CudaDataLoader(object):
             unk_args: str = ", ".join(list(kwargs.values()))
             raise Exception(f"Keywora Arguments {unk_args:s} not supported.")
 
+        self.dataset = dataset
         self.__length: int = len(dataset)
         self.keep_cpu_copy = keep_cpu_copy
         self.__batch_size = batch_size if batch_size > 0 else len(dataset)
@@ -50,8 +51,8 @@ class CudaDataLoader(object):
             else:
                 cpu_data, cpu_target = self.data.cpu(), self.target.cpu()
                 del self.data, self.target
-            self.data = cpu_data.index_select(0, idx).cuda()
-            self.target = cpu_target.index_select(0, idx).cuda()
+            self.data.copy_(cpu_data.index_select(0, idx))
+            self.target.copy_(cpu_target.index_select(0, idx))
         self.__start_idx = 0
         return self
 

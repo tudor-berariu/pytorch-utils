@@ -53,7 +53,7 @@ def main():
     print(f"CudaDataLoader avg. time per epoch: {np.mean(times):5.2f}s.")
 
     loader = DataLoader(dataset, batch_size=batch_size, shuffle=shuffle,
-                        num_workers=1, pin_memory=True)
+                        num_workers=32, pin_memory=True)
     times = []
     for _ in range(args.epochs):
         start = time.time()
