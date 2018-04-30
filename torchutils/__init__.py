@@ -1,1 +1,1 @@
-from .cuda_data_loader import CudaDataLoader
+from .cuda_data_loader import InMemoryDataLoader

@@ -6,7 +6,7 @@ from torch.utils.data.dataset import Dataset
 from torch.utils.data import DataLoader
 from torchvision import datasets, transforms
 
-from torchutils import CudaDataLoader
+from torchutils import InMemoryDataLoader
 
 
 def main():
@@ -40,8 +40,9 @@ def main():
 
     model = nn.Linear(32 * 32, 10).cuda()
 
-    cuda_loader = CudaDataLoader(dataset, batch_size=batch_size,
-                                 shuffle=shuffle)
+    cuda_loader = InMemoryDataLoader(dataset, cuda=True,
+                                     batch_size=batch_size,
+                                     shuffle=shuffle)
     times = []
     for _ in range(args.epochs):
         start = time.time()
